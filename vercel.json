@@ -1,7 +1,7 @@
 {
   "version": 2,
   "name": "pope-api",
-  "builds": [{ "src": "index.js", "use": "@vercel/node" }],
-  "routes": [{ "src": "/(.*)", "dest": "/index.js" }],
+  "builds": [{ "src": "package.json", "use": "@vercel/node" }],
+
   "rewrites": [{ "source": "/(.*)", "destination": "/api" }]
 }
