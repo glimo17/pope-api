@@ -23,7 +23,7 @@ mongoose
   });
 
 const app = express();
-
+const router = express.Router();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -46,6 +46,9 @@ app.use("/api/orders", orderRouter);
 
 app.use((err, req, res, next) => {
   res.status(500).send({ message: err.message });
+});
+router.get("api/health", (req, res) => {
+  res.status(200).send("Ok");
 });
 
 const _dirname = path.resolve();
