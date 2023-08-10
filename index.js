@@ -10,7 +10,7 @@ import accountsRouter from "./routes/accountsRouter.js";
 import orderRouter from "./routes/orderRoutes.js";
 import uploadRouter from "./routes/uploadRoutes.js";
 import movimientosRouter from "./routes/movimientosRouter.js";
-
+import healthRouter from "./routes/healthRouter.js";
 dotenv.config();
 
 mongoose
@@ -43,12 +43,10 @@ app.use("/api/accounts", accountsRouter);
 app.use("/api/users", userRouter);
 app.use("/api/movimientos", movimientosRouter);
 app.use("/api/orders", orderRouter);
+app.use("/api/health", healthRouter);
 
 app.use((err, req, res, next) => {
   res.status(500).send({ message: err.message });
-});
-router.get("api/health", (req, res) => {
-  res.status(200).send("Ok");
 });
 
 const _dirname = path.resolve();
