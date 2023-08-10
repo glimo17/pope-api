@@ -3,5 +3,5 @@
   "name": "pope-api",
   "builds": [{ "src": "server.js", "use": "@vercel/node" }],
   "routes": [{ "src": "/(.*)", "dest": "/index.js" }],
-  "rewrites": [{ "source": "/(.*)", "destination": "(.*)" }]
+  "rewrites": [{ "source": "/(.*)", "destination": "/api" }]
 }
