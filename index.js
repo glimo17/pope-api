@@ -80,7 +80,7 @@ app.use((err, req, res, next) => {
   res.status(500).send({ message: err.message });
 });
 
-app.use(cors(allowCors()));
+app.use(cors(allowCors(handler)));
 
 const port = process.env.PORT || 5000;
 
