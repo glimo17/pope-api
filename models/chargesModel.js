@@ -15,6 +15,12 @@ const ChargesSchema = new mongoose.Schema(
     ammount: {
       type: Number,
     },
+    ammountPay: {
+      type: Number,
+    },
+    status: {
+      type: String,
+    },
 
     date: {
       type: Date,

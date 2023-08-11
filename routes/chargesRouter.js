@@ -17,6 +17,22 @@ chargesRouter.get(
     res.send(users);
   })
 );
+
+chargesRouter.put(
+  "updateAmmountPay/:id/",
+  expressAsyncHandler(async (req, res) => {
+    console.log(req.params.id);
+    const order = await Charges.findById(req.params.id);
+    if (order) {
+      order.status = "Procesado";
+      order.ammountPay = req.params.ammountPay;
+      await order.save();
+      res.send({ message: "Procesado" });
+    } else {
+      res.status(404).send({ message: "Order Not Found" });
+    }
+  })
+);
 chargesRouter.post(
   "/",
 
