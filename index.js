@@ -11,6 +11,7 @@ import orderRouter from "./routes/orderRoutes.js";
 import uploadRouter from "./routes/uploadRoutes.js";
 import movimientosRouter from "./routes/movimientosRouter.js";
 import healthRouter from "./routes/healthRouter.js";
+import cors from "cors";
 dotenv.config();
 
 mongoose
@@ -25,6 +26,11 @@ mongoose
 const app = express();
 
 const router = express.Router();
+
+
+app.use(cors({
+  origin: 'https://pope-store.vercel.app/'
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -49,6 +55,10 @@ app.use("/api/health", healthRouter);
 app.use((err, req, res, next) => {
   res.status(500).send({ message: err.message });
 });
+
+app.use(cors({
+  methods: ['GET','POST','DELETE','UPDATE','PUT','PATCH']
+}));
 
 const port = process.env.PORT || 5000;
 
