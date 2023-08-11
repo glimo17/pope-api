@@ -18,14 +18,14 @@ chargesRouter.get(
   })
 );
 
-chargesRouter.put(
-  "updateAmmountPay/:id/",
+chargesRouter.post(
+  "update/",
   expressAsyncHandler(async (req, res) => {
-    console.log(req.params.id);
-    const order = await Charges.findById(req.params.id);
+    console.log(req.body.id);
+    const order = await Charges.findById(req.body.id);
     if (order) {
       order.status = "Procesado";
-      order.ammountPay = req.params.ammountPay;
+      order.ammountPay = req.body.ammountPay;
       await order.save();
       res.send({ message: "Procesado" });
     } else {
