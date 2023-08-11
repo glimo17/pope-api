@@ -3,11 +3,12 @@ import bcrypt from "bcryptjs";
 import expressAsyncHandler from "express-async-handler";
 import Customer from "../models/customerModel.js";
 import { generateToken, isAuth, isAdmin } from "../utils.js";
-
+import cors from "cors";
 const customerRouter = express.Router();
 
 customerRouter.get(
   "/",
+  cors(),
   expressAsyncHandler(async (req, res) => {
     const users = await Customer.find({});
     res.send(users);

@@ -26,11 +26,35 @@ mongoose
 const app = express();
 
 const router = express.Router();
+const allowCors = (fn) => async (req, res) => {
+  res.setHeader("Access-Control-Allow-Credentials", true);
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  // another common pattern
+  // res.setHeader('Access-Control-Allow-Origin', req.headers.origin);
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET,OPTIONS,PATCH,DELETE,POST,PUT"
+  );
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version"
+  );
+  if (req.method === "OPTIONS") {
+    res.status(200).end();
+    return;
+  }
+  return await fn(req, res);
+};
 
-
-app.use(cors({
-  origin: 'https://pope-store.vercel.app/'
-}));
+const handler = (req, res) => {
+  const d = new Date();
+  res.end(d.toString());
+};
+app.use(
+  cors({
+    origin: "*",
+  })
+);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -56,9 +80,7 @@ app.use((err, req, res, next) => {
   res.status(500).send({ message: err.message });
 });
 
-app.use(cors({
-  methods: ['GET','POST','DELETE','UPDATE','PUT','PATCH']
-}));
+app.use(cors(allowCors()));
 
 const port = process.env.PORT || 5000;
 
