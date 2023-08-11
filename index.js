@@ -11,6 +11,7 @@ import orderRouter from "./routes/orderRoutes.js";
 import uploadRouter from "./routes/uploadRoutes.js";
 import movimientosRouter from "./routes/movimientosRouter.js";
 import healthRouter from "./routes/healthRouter.js";
+import chargesRouter from "./routes/chargesRouter.js";
 import cors from "cors";
 dotenv.config();
 
@@ -75,6 +76,7 @@ app.use("/api/users", userRouter);
 app.use("/api/movimientos", movimientosRouter);
 app.use("/api/orders", orderRouter);
 app.use("/api/health", healthRouter);
+app.use("/api/charges", chargesRouter);
 
 app.use((err, req, res, next) => {
   res.status(500).send({ message: err.message });
