@@ -19,12 +19,14 @@ chargesRouter.get(
 );
 
 chargesRouter.post(
-  "update/",
+  "/update",
   expressAsyncHandler(async (req, res) => {
-    console.log(req.body.id);
-    const order = await Charges.findById(req.body.id);
+    console.log(req.body.accountId);
+    const order = await Charges.findById(req.body.accountId);
     if (order) {
       order.status = "Procesado";
+      order.description = order.description;
+      order.ammount = order.ammount;
       order.ammountPay = req.body.ammountPay;
       await order.save();
       res.send({ message: "Procesado" });

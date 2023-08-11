@@ -8,8 +8,7 @@ const ChargesSchema = new mongoose.Schema(
     },
 
     description: {
-      type: Number,
-      required: true,
+      type: String,
     },
 
     ammount: {
