@@ -15,6 +15,20 @@ accountsRouter.get(
     res.send(users);
   })
 );
+accountsRouter.get(
+  "/:id",
+  expressAsyncHandler(async (req, res) => {
+    const user = await Accounts.findById(req.params.id).populate(
+      "customerId",
+      "name"
+    );
+    if (user) {
+      res.send(user);
+    } else {
+      res.status(404).send({ message: "User Not Found" });
+    }
+  })
+);
 accountsRouter.post(
   "/",
 
