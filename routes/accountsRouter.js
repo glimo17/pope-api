@@ -18,6 +18,7 @@ accountsRouter.get(
 accountsRouter.get(
   "/:id",
   expressAsyncHandler(async (req, res) => {
+    console.log("jeank");
     const user = await Accounts.findById(req.params.id).populate(
       "customerId",
       "name"
