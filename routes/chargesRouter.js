@@ -11,6 +11,8 @@ chargesRouter.get(
   cors(),
   expressAsyncHandler(async (req, res) => {
     const users = await Charges.find({})
+      .where("status")
+      .equals("Ingresado")
       .populate("accountId", "-num")
       .populate([{ path: "accountId", populate: { path: "customerId" } }]);
 
@@ -24,10 +26,23 @@ chargesRouter.post(
     console.log(req.body.accountId);
     const order = await Charges.findById(req.body.accountId);
     if (order) {
-      order.status = "Procesado";
-      order.description = order.description;
-      order.ammount = order.ammount;
       order.ammountPay = req.body.ammountPay;
+      await order.save();
+      res.send({ message: "Procesado" });
+    } else {
+      res.status(404).send({ message: "Order Not Found" });
+    }
+  })
+);
+
+chargesRouter.post(
+  "/makeCharge",
+  expressAsyncHandler(async (req, res) => {
+    console.log(req.body.accountId);
+    const order = await Charges.findById(req.body.accountId);
+    if (order) {
+      order.status = "Procesado";
+
       await order.save();
       res.send({ message: "Procesado" });
     } else {
