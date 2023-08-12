@@ -12,7 +12,9 @@ import uploadRouter from "./routes/uploadRoutes.js";
 import movimientosRouter from "./routes/movimientosRouter.js";
 import healthRouter from "./routes/healthRouter.js";
 import chargesRouter from "./routes/chargesRouter.js";
+import pedidosModel from "./routes/pedidosRouter.js";
 import cors from "cors";
+import pedidosRouter from "./routes/pedidosRouter.js";
 dotenv.config();
 
 mongoose
@@ -77,6 +79,7 @@ app.use("/api/movimientos", movimientosRouter);
 app.use("/api/orders", orderRouter);
 app.use("/api/health", healthRouter);
 app.use("/api/charges", chargesRouter);
+app.use("/api/pedidos", pedidosRouter);
 
 app.use((err, req, res, next) => {
   res.status(500).send({ message: err.message });
