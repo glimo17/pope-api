@@ -38,12 +38,8 @@ productRouter.post(
   isAdmin,
   expressAsyncHandler(async (req, res) => {
     const newProduct = new Product({
-      name: "",
-      slug: "",
-      image: "/images/p1.jpg",
       price: 0,
-      category: "",
-      brand: "",
+
       countInStock: 0,
       rating: 0,
       numReviews: 0,
