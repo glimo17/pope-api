@@ -54,7 +54,7 @@ pedidosRouter.post(
   "/",
 
   expressAsyncHandler(async (req, res) => {
-    console.log(req.body)
+    console.log(req.body);
     const users = await Pedidos.find({});
     console.log(req.body.ammount);
     const newCustomer = new Pedidos({
@@ -62,6 +62,7 @@ pedidosRouter.post(
       ammount: req.body.ammount,
       product: req.body.product,
       cant: req.body.cant,
+      date: Date.now(),
     });
     const customer = await newCustomer.save();
     res.send({ message: "Credito Creado", customer });

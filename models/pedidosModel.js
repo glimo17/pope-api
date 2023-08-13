@@ -8,7 +8,7 @@ const PedidostSchema = new mongoose.Schema(
     },
 
     product: {
-      type: Number,
+      type: String,
       required: true,
     },
 
