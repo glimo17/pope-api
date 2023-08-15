@@ -4,6 +4,7 @@ import expressAsyncHandler from "express-async-handler";
 import Charges from "../models/chargesModel.js";
 import { generateToken, isAuth, isAdmin } from "../utils.js";
 import cors from "cors";
+import Accounts from "../models/CustomerAccountModel.js";
 const chargesRouter = express.Router();
 
 chargesRouter.get(
