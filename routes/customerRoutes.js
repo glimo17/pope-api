@@ -64,6 +64,8 @@ customerRouter.put(
       customer.name = req.body.name || customer.name;
       customer.email = req.body.email || customer.email;
       customer.phone = req.body.phone || customer.phone;
+      customer.canton = req.body.canton || customer.canton;
+      customer.direc = req.body.direc || customer.direc;
       const updatedUser = await customer.save();
       res.send({ message: "User Updated", user: updatedUser });
     } else {
