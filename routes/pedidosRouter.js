@@ -4,6 +4,7 @@ import expressAsyncHandler from "express-async-handler";
 import Pedidos from "../models/pedidosModel.js";
 import { generateToken, isAuth, isAdmin } from "../utils.js";
 import cors from "cors";
+import Accounts from "../models/CustomerAccountModel.js";
 const pedidosRouter = express.Router();
 
 pedidosRouter.get(
@@ -64,22 +65,32 @@ pedidosRouter.post(
     }
   })
 );
+
 pedidosRouter.post(
   "/",
 
   expressAsyncHandler(async (req, res) => {
-    console.log(req.body);
-    const users = await Pedidos.find({});
-    console.log(req.body.ammount);
-    const newCustomer = new Pedidos({
-      accountId: req.body.accountId,
-      ammount: req.body.ammount,
-      product: req.body.product,
-      cant: req.body.cant,
-      date: Date.now(),
-    });
-    const customer = await newCustomer.save();
-    res.send({ message: "Credito Creado", customer });
+    console.log(req.body.accountId);
+    const _id = req.body.accountId;
+    const account = await Accounts.findById(_id);
+
+    console.log("est aes=");
+    console.log(account);
+    if (account) {
+      account.ammount = Number(account.ammount) + Number(req.body.ammount);
+      account.limit = Number(account.limit) - Number(req.body.ammount);
+      const updatedUser = await account.save();
+
+      const newCustomer = new Pedidos({
+        accountId: req.body.accountId,
+        ammount: req.body.ammount,
+        product: req.body.product,
+        cant: req.body.cant,
+        date: Date.now(),
+      });
+      const customer = await newCustomer.save();
+      res.send({ message: "Credito Creado", customer });
+    }
   })
 );
 export default pedidosRouter;
