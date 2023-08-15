@@ -18,6 +18,21 @@ chargesRouter.get(
     res.send(users);
   })
 );
+chargesRouter.get(
+  "/:id",
+  cors(),
+  expressAsyncHandler(async (req, res) => {
+    if (req.params.id) {
+      const users = await Charges.find({})
+        .where("accountId")
+        .equals(req.params.id)
+        .populate("accountId", "-num")
+        .populate([{ path: "accountId", populate: { path: "customerId" } }]);
+      res.send(users);
+    }
+    res.status(404).send({ message: "Not Found" });
+  })
+);
 
 chargesRouter.post(
   "/update",
@@ -53,16 +68,26 @@ chargesRouter.post(
   "/",
 
   expressAsyncHandler(async (req, res) => {
-    const users = await Accounts.find({});
     console.log(req.body.ammount);
-    const newCustomer = new Charges({
-      customerId: req.body.customerId,
-      num: users.length + 1,
-      ammount: req.body.ammount,
-      limit: req.body.limit,
-    });
-    const customer = await newCustomer.save();
-    res.send({ message: "Credito Creado", customer });
+    const _id = req.body.accountId;
+    const account = await Accounts.findById(_id);
+
+    console.log(account);
+    if (account) {
+      account.ammount = Number(account.ammount) - Number(req.body.ammount);
+      account.limit = Number(account.limit) + Number(req.body.ammount);
+      const updatedUser = await account.save();
+
+      const newCustomer = new Charges({
+        accountId: req.body.accountId,
+        description: req.body.description,
+        ammount: req.body.ammount,
+        ammountPay: req.body.ammountPay,
+        status: "Procesado",
+      });
+      const customer = await newCustomer.save();
+      res.send({ message: "Credito Creado", customer });
+    }
   })
 );
 export default chargesRouter;
