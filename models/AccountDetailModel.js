@@ -11,5 +11,5 @@ const AccountDetailSchema = new mongoose.Schema(
   }
 );
 
-const AccountDetail = mongoose.model("CustomerAccount", AccountDetailSchema);
+const AccountDetail = mongoose.model("AccountDetail", AccountDetailSchema);
 export default AccountDetail;

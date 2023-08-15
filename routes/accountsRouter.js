@@ -4,6 +4,7 @@ import expressAsyncHandler from "express-async-handler";
 import Accounts from "../models/CustomerAccountModel.js";
 import { generateToken, isAuth, isAdmin } from "../utils.js";
 import cors from "cors";
+import AccountDetail from "../models/AccountDetailModel.js";
 const accountsRouter = express.Router();
 
 accountsRouter.get(
@@ -38,6 +39,22 @@ accountsRouter.post(
     const newCustomer = new Accounts({
       customerId: req.body.customerId,
       num: users.length + 1,
+      ammount: req.body.ammount,
+      limit: req.body.limit,
+    });
+    const customer = await newCustomer.save();
+    res.send({ message: "Credito Creado", customer });
+  })
+);
+
+accountsRouter.post(
+  "/addConf",
+
+  expressAsyncHandler(async (req, res) => {
+   
+    const newCustomer = new AccountDetail({
+      freq: req.body.freq,
+      day: req.body.freq,
       ammount: req.body.ammount,
       limit: req.body.limit,
     });
