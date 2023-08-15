@@ -1,15 +1,5 @@
 import mongoose from "mongoose";
-const AcciuntDetailSchema = new mongoose.Schema(
-  {
-    date: { type: Date, required: false },
-    freq: { type: String, required: false },
-    day: { type: Number, required: false },
-    dateIni: { type: Number, required: false },
-  },
-  {
-    timestamps: true,
-  }
-);
+
 const CustomerAccountSchema = new mongoose.Schema(
   {
     customerId: {
@@ -33,8 +23,7 @@ const CustomerAccountSchema = new mongoose.Schema(
     date: {
       type: Date,
       default: Date.now,
-    },
-    detail: { AcciuntDetailSchema },
+    }
   },
   {
     timestamps: true,

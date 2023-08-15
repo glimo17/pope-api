@@ -37,8 +37,8 @@ chargesRouter.post(
 chargesRouter.post(
   "/makeCharge",
   expressAsyncHandler(async (req, res) => {
-    console.log(req.body.accountId);
-    const order = await Charges.findById(req.body.accountId);
+    console.log(req.body._id);
+    const order = await Charges.findById(req.body._id);
     if (order) {
       order.status = "Procesado";
 

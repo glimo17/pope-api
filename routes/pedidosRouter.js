@@ -10,13 +10,27 @@ pedidosRouter.get(
   "/",
   cors(),
   expressAsyncHandler(async (req, res) => {
-    console.log("jeank");
     const users = await Pedidos.find({})
 
       .populate("accountId", "-num")
       .populate([{ path: "accountId", populate: { path: "customerId" } }]);
 
     res.send(users);
+  })
+);
+pedidosRouter.get(
+  "/:id",
+  cors(),
+  expressAsyncHandler(async (req, res) => {
+    if (req.params.id) {
+      const users = await Pedidos.find({})
+        .where("accountId")
+        .equals(req.params.id)
+        .populate("accountId", "-num")
+        .populate([{ path: "accountId", populate: { path: "customerId" } }]);
+      res.send(users);
+    }
+    res.status(404).send({ message: "Not Found" });
   })
 );
 
