@@ -74,17 +74,17 @@ pedidosRouter.post(
     const _id = req.body.accountId;
     const account = await Accounts.findById(_id);
 
-    console.log("est aes=");
     console.log(account);
     if (account) {
-      account.ammount = Number(account.ammount) + Number(req.body.ammount);
-      account.limit = Number(account.limit) - Number(req.body.ammount);
-      const updatedUser = await account.save();
+      // account.ammount = Number(account.ammount) + Number(req.body.ammount);
+      // account.limit = Number(account.limit) - Number(req.body.ammount);
+      // const updatedUser = await account.save();
 
       const newCustomer = new Pedidos({
         accountId: req.body.accountId,
         ammount: req.body.ammount,
         product: req.body.product,
+        status: "Ingresado",
         cant: req.body.cant,
         date: Date.now(),
       });

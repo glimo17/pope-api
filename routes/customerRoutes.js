@@ -18,6 +18,7 @@ customerRouter.get(
 customerRouter.get(
   "/:id",
   expressAsyncHandler(async (req, res) => {
+    console.log(req.params.id);
     const user = await Customer.findById(req.params.id);
     if (user) {
       res.send(user);

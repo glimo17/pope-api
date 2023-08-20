@@ -19,6 +19,10 @@ const PedidostSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
+    status: {
+      type: String,
+      required: true,
+    },
 
     date: {
       type: Date,
