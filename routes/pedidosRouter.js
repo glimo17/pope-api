@@ -70,25 +70,39 @@ pedidosRouter.post(
   "/",
 
   expressAsyncHandler(async (req, res) => {
-    console.log(req.body.accountId);
-    const _id = req.body.accountId;
-    const account = await Accounts.findById(_id);
-
-    console.log(account);
-    if (account) {
+    const account = await Accounts.find({})
+      .where("accountId")
+      .equals(req.body.customerId);
+    console.log(account[0]);
+    if (account[0]) {
       // account.ammount = Number(account.ammount) + Number(req.body.ammount);
       // account.limit = Number(account.limit) - Number(req.body.ammount);
       // const updatedUser = await account.save();
 
       const newCustomer = new Pedidos({
-        accountId: req.body.accountId,
+        accountId: account[0]._id,
+        ammount: req.body.ammount,
+        montoCosto: req.body.montoCosto,
+        montoPrima: req.body.montoPrima,
+        montoDolar: req.body.montoDolar,
+        montoGanancia: req.body.montoGanancia,
+        descuento: req.body.descuento,
+        proveedor: req.body.proveedor,
+        marca: req.body.marca,
+        destalle: req.body.destalle,
+        talla: req.body.talla,
+        lugar: req.body.lugar,
         ammount: req.body.ammount,
         product: req.body.product,
         status: "Ingresado",
         cant: req.body.cant,
         date: Date.now(),
+        dateEntrega: Date.now(),
+        dateCompra: Date.now(),
       });
+      console.log("va");
       const customer = await newCustomer.save();
+      console.log("ya");
       res.send({ message: "Credito Creado", customer });
     }
   })

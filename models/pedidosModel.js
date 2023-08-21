@@ -9,24 +9,70 @@ const PedidostSchema = new mongoose.Schema(
 
     product: {
       type: String,
-      required: true,
     },
 
+    tipoPago: {
+      type: String,
+    },
+
+    numFactura: {
+      type: String,
+    },
+
+    proveedor: {
+      type: String,
+    },
+    Lugar: {
+      type: String,
+    },
+    talla: {
+      type: String,
+    },
+    detalle: {
+      type: String,
+    },
+    montoPrima: {
+      type: Number,
+    },
+    codigo: {
+      type: String,
+    },
+    montoDolar: {
+      type: Number,
+    },
+    descuento: {
+      type: Number,
+    },
     cant: {
       type: Number,
     },
+    montoCosto: {
+      type: Number,
+ 
+    },
+    montoGanancia: {
+      type: Number,
+
+    },
     ammount: {
       type: Number,
-      required: true,
+
     },
     status: {
       type: String,
-      required: true,
+
     },
 
     date: {
       type: Date,
       default: Date.now,
+    },
+    dateEntrega: {
+      type: Date,
+    },
+
+    dateCompra: {
+      type: Date,
     },
   },
   {
