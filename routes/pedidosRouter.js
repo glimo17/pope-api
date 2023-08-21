@@ -20,6 +20,20 @@ pedidosRouter.get(
   })
 );
 pedidosRouter.get(
+  "/status/:id",
+  cors(),
+  expressAsyncHandler(async (req, res) => {
+    const users = await Pedidos.find({})
+      .where("status")
+      .equals(req.params.status)
+
+      .populate("accountId", "-num")
+      .populate([{ path: "accountId", populate: { path: "customerId" } }]);
+
+    res.send(users);
+  })
+);
+pedidosRouter.get(
   "/:id",
   cors(),
   expressAsyncHandler(async (req, res) => {
