@@ -94,6 +94,47 @@ pedidosRouter.post(
 );
 
 pedidosRouter.post(
+  "/update",
+
+  expressAsyncHandler(async (req, res) => {
+    const account = await Accounts.find({})
+      .where("customerId")
+      .equals(req.body.customerId);
+    console.log(account[0]);
+    if (account[0]) {
+      // account.ammount = Number(account.ammount) + Number(req.body.ammount);
+      // account.limit = Number(account.limit) - Number(req.body.ammount);
+      // const updatedUser = await account.save();
+      const pedido = await Pedidos.findById(req.body.id);
+      const newCustomer = new Pedidos({
+        accountId: account[0]._id,
+        ammount: req.body.ammount || pedido.ammount,
+        montoCosto: req.body.montoCosto || pedido.montoCosto,
+        montoPrima: req.body.montoPrima || pedido.montoPrima,
+        montoDolar: req.body.montoDolar || pedido.montoDolar,
+        tcNum: req.body.tcNum || pedido.tcNum,
+        montoGanancia: req.body.montoGanancia,
+        descuento: req.body.descuento,
+        proveedor: req.body.proveedor,
+        marca: req.body.marca || "" || pedido.marca,
+        destalle: req.body.destalle || pedido.detalle,
+        talla: req.body.talla || "" || pedido.talla,
+        lugar: req.body.lugar || "" || pedido.lugar,
+        product: req.body.product || "" || pedido.product,
+        status: "Ingresado",
+        cant: req.body.cant || pedido.cant,
+        dateEntrega: req.body.dateEntrega,
+        dateCompra: req.body.dateCompra,
+      });
+      console.log("va");
+      const customer = await newCustomer.save();
+      console.log("ya");
+      res.send({ message: "Credito Creado", customer });
+    }
+  })
+);
+
+pedidosRouter.post(
   "/",
 
   expressAsyncHandler(async (req, res) => {
