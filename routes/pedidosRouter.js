@@ -71,7 +71,7 @@ pedidosRouter.post(
 
   expressAsyncHandler(async (req, res) => {
     const account = await Accounts.find({})
-      .where("accountId")
+      .where("customerId")
       .equals(req.body.customerId);
     console.log(account[0]);
     if (account[0]) {
