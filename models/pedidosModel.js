@@ -52,6 +52,9 @@ const PedidostSchema = new mongoose.Schema(
     montoGanancia: {
       type: Number,
     },
+    montoVenta: {
+      type: Number,
+    },
     ammount: {
       type: Number,
     },
