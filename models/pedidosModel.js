@@ -65,6 +65,10 @@ const PedidostSchema = new mongoose.Schema(
       type: String,
     },
 
+    marca: {
+      type: String,
+    },
+
     date: {
       type: Date,
       default: Date.now,

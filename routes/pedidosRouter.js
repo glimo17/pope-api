@@ -158,6 +158,7 @@ pedidosRouter.post(
         descuento: req.body.descuento,
         proveedor: req.body.proveedor,
         marca: req.body.marca || "",
+        numFactura: req.body.numFactura || "",
         destalle: req.body.destalle,
         talla: req.body.talla || "",
         lugar: req.body.lugar || "",
