@@ -48,19 +48,18 @@ const PedidostSchema = new mongoose.Schema(
     },
     montoCosto: {
       type: Number,
- 
     },
     montoGanancia: {
       type: Number,
-
     },
     ammount: {
       type: Number,
-
+    },
+    tcNum: {
+      type: String,
     },
     status: {
       type: String,
-
     },
 
     date: {
