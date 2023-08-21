@@ -140,7 +140,8 @@ pedidosRouter.post(
     const account = await Accounts.find({})
       .where("customerId")
       .equals(req.body.customerId);
-    console.log(account[0]);
+    console.log(req.body.lugar);
+    console.log(req.body.montoVenta);
     if (account[0]) {
       // account.ammount = Number(account.ammount) + Number(req.body.ammount);
       // account.limit = Number(account.limit) - Number(req.body.ammount);
@@ -156,6 +157,7 @@ pedidosRouter.post(
         montoVenta: req.body.montoVenta,
         detalle: req.body.detalle,
         tcNum: req.body.tcNum || "",
+        codigo: req.body.codigo || "",
         montoGanancia: req.body.montoGanancia,
         descuento: req.body.descuento,
         proveedor: req.body.proveedor,

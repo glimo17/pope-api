@@ -22,7 +22,7 @@ const PedidostSchema = new mongoose.Schema(
     proveedor: {
       type: String,
     },
-    Lugar: {
+    lugar: {
       type: String,
     },
     talla: {
