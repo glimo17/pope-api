@@ -23,6 +23,9 @@ pedidosRouter.get(
   "/status/:id",
   cors(),
   expressAsyncHandler(async (req, res) => {
+
+    console.log("Jeank");
+    console.log(req.params.id);
     const users = await Pedidos.find({})
       .where("status")
       .equals(req.params.status)
