@@ -7,6 +7,8 @@ const customersSchema = new mongoose.Schema(
     phone: { type: String, required: false, unique: false },
     canton: { type: String, required: false, unique: false },
     direc: { type: String, required: false, unique: false },
+    fechaNacimiento: { type: date, required: false, unique: false },
+    oficio: { type: String, required: false, unique: false },
   },
   {
     timestamps: true,

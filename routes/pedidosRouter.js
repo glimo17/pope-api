@@ -35,9 +35,6 @@ pedidosRouter.get(
 pedidosRouter.get(
   "/:id",
   expressAsyncHandler(async (req, res) => {
-    console.log("jjjj");
-    console.log(req.params.id);
-
     if (req.params.id) {
       const users = await Pedidos.find({})
         .where("accountId")
@@ -63,7 +60,7 @@ pedidosRouter.get(
 );
 
 pedidosRouter.post(
-  "/update",
+  "/update2",
   expressAsyncHandler(async (req, res) => {
     console.log(req.body.accountId);
     const order = await Pedidos.findById(req.body.accountId);
@@ -97,6 +94,7 @@ pedidosRouter.post(
   "/update",
 
   expressAsyncHandler(async (req, res) => {
+    console.log("account[0]");
     const account = await Accounts.find({})
       .where("customerId")
       .equals(req.body.customerId);
