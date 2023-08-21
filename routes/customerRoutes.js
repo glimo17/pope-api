@@ -54,6 +54,7 @@ customerRouter.post(
       direc: req.body.direc,
       fechaNacimiento: req.body.fechaNacimiento,
       oficio: req.body.oficio,
+      tipo: req.body.tipo,
     });
     const customer = await newCustomer.save();
     res.send({ message: "Cliente Creado", customer });

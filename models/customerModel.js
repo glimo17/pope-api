@@ -9,6 +9,7 @@ const customersSchema = new mongoose.Schema(
     direc: { type: String, required: false, unique: false },
     fechaNacimiento: { type: Date, required: false, unique: false },
     oficio: { type: String, required: false, unique: false },
+    tipo: { type: String, required: false, unique: false },
   },
   {
     timestamps: true,
