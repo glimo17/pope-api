@@ -75,10 +75,10 @@ pedidosRouter.post(
 pedidosRouter.post(
   "/status/:id",
   expressAsyncHandler(async (req, res) => {
-    console.log(req.body.accountId);
-    const order = await Pedidos.findById(req.body.accountId);
+    console.log(req.body.id);
+    const order = await Pedidos.findById(req.body.id);
     if (order) {
-      order.status = "Procesado";
+      order.status = req.body.status;
 
       await order.save();
       res.send({ message: "Procesado" });
