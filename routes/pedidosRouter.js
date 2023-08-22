@@ -96,7 +96,7 @@ pedidosRouter.post(
 
     const customer = await Pedidos.findById(req.body.id);
     if (customer) {
-        (customer.ammount = req.body.ammount),
+      (customer.ammount = req.body.ammount),
         (customer.montoCosto = req.body.montoCosto),
         (customer.montoPrima = req.body.montoPrima),
         (customer.montoDolar = req.body.montoDolar),
@@ -113,6 +113,9 @@ pedidosRouter.post(
         (customer.destalle = req.body.destalle),
         (customer.talla = req.body.talla || ""),
         (customer.lugar = req.body.lugar || ""),
+        (customer.montoCostoDes =
+          req.body.montoCostoDes || customer.montoCostoDes)
+          ,
         (customer.ammount = req.body.ammount),
         (customer.product = req.body.product || ""),
         (customer.cant = req.body.cant),
@@ -160,8 +163,10 @@ pedidosRouter.post(
       const newCustomer = new Pedidos({
         accountId: account[0]._id,
         ammount: req.body.ammount,
+        montoCostoDes: req.body.montoCostoDes,
         montoCosto: req.body.montoCosto,
         montoPrima: req.body.montoPrima,
+        link: req.body.link,
         montoDolar: req.body.montoDolar,
         tipoPago: req.body.tipoPago,
         montoVenta: req.body.montoVenta,

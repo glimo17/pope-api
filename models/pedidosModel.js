@@ -34,7 +34,14 @@ const PedidostSchema = new mongoose.Schema(
     montoPrima: {
       type: Number,
     },
+    montoCostoDes: {
+      type: Number,
+    },
     codigo: {
+      type: String,
+    },
+
+    link: {
       type: String,
     },
     montoDolar: {
