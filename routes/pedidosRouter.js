@@ -73,7 +73,7 @@ pedidosRouter.post(
 );
 
 pedidosRouter.post(
-  "/status/:id",
+  "/status",
   expressAsyncHandler(async (req, res) => {
     console.log(req.body.id);
     const order = await Pedidos.findById(req.body.id);
@@ -96,7 +96,6 @@ pedidosRouter.post(
 
     const customer = await Pedidos.findById(req.body.id);
     if (customer) {
-      (customer.status = customer.status),
         (customer.ammount = req.body.ammount),
         (customer.montoCosto = req.body.montoCosto),
         (customer.montoPrima = req.body.montoPrima),
