@@ -50,8 +50,6 @@ pedidosRouter.get(
 pedidosRouter.get(
   "/get/:id",
   expressAsyncHandler(async (req, res) => {
-    console.log("jjjj");
-    console.log(req.params.id);
     const users = await Pedidos.findById(req.params.id)
       .populate("accountId", "-num")
       .populate([{ path: "accountId", populate: { path: "customerId" } }]);
@@ -75,7 +73,7 @@ pedidosRouter.post(
 );
 
 pedidosRouter.post(
-  "/makeCharge",
+  "/status/:id",
   expressAsyncHandler(async (req, res) => {
     console.log(req.body.accountId);
     const order = await Pedidos.findById(req.body.accountId);
@@ -94,45 +92,58 @@ pedidosRouter.post(
   "/update",
 
   expressAsyncHandler(async (req, res) => {
-    console.log("account[0]");
-    const account = await Accounts.find({})
-      .where("customerId")
-      .equals(req.body.customerId);
-    console.log(account[0]);
-    if (account[0]) {
-      // account.ammount = Number(account.ammount) + Number(req.body.ammount);
-      // account.limit = Number(account.limit) - Number(req.body.ammount);
-      // const updatedUser = await account.save();
-      const pedido = await Pedidos.findById(req.body.id);
-      const newCustomer = new Pedidos({
-        accountId: account[0]._id,
-        ammount: req.body.ammount || pedido.ammount,
-        montoCosto: req.body.montoCosto || pedido.montoCosto,
-        montoPrima: req.body.montoPrima || pedido.montoPrima,
-        montoDolar: req.body.montoDolar || pedido.montoDolar,
-        tcNum: req.body.tcNum || pedido.tcNum,
-        montoVenta: req.body.montoVenta || pedido.montoVenta,
-        montoGanancia: req.body.montoGanancia,
-        descuento: req.body.descuento,
-        proveedor: req.body.proveedor,
-        marca: req.body.marca || "" || pedido.marca,
-        destalle: req.body.detalle || pedido.detalle,
-        talla: req.body.talla || "" || pedido.talla,
-        lugar: req.body.lugar || "" || pedido.lugar,
-        product: req.body.product || "" || pedido.product,
-        status: "Ingresado",
-        cant: req.body.cant || pedido.cant,
-        dateEntrega: req.body.dateEntrega,
-        dateCompra: req.body.dateCompra,
-      });
-      console.log("va");
-      const customer = await newCustomer.save();
-      console.log("ya");
-      res.send({ message: "Credito Creado", customer });
+    console.log("jjjj");
+
+    const customer = await Pedidos.findById(req.body.id);
+    if (customer) {
+      (customer.status = customer.status),
+        (customer.ammount = req.body.ammount),
+        (customer.montoCosto = req.body.montoCosto),
+        (customer.montoPrima = req.body.montoPrima),
+        (customer.montoDolar = req.body.montoDolar),
+        (customer.tipoPago = req.body.tipoPago),
+        (customer.montoVenta = req.body.montoVenta),
+        (customer.detalle = req.body.detalle),
+        (customer.tcNum = req.body.tcNum || ""),
+        (customer.codigo = req.body.codigo || ""),
+        (customer.montoGanancia = req.body.montoGanancia),
+        (customer.descuento = req.body.descuento),
+        (customer.proveedor = req.body.proveedor),
+        (customer.marca = req.body.marca || ""),
+        (customer.numFactura = req.body.numFactura || ""),
+        (customer.destalle = req.body.destalle),
+        (customer.talla = req.body.talla || ""),
+        (customer.lugar = req.body.lugar || ""),
+        (customer.ammount = req.body.ammount),
+        (customer.product = req.body.product || ""),
+        (customer.cant = req.body.cant),
+        (customer.date = Date.now()),
+        (customer.dateEntrega = Date.now()),
+        (customer.dateCompra = Date.now());
+
+      const updatedUser = await customer.save();
+      res.send({ message: "User Updated", user: updatedUser });
+    } else {
+      res.status(404).send({ message: "User Not Found" });
     }
   })
 );
 
+pedidosRouter.post(
+  "/status/",
+
+  expressAsyncHandler(async (req, res) => {
+    const customer = await Pedidos.findById(req.params.id);
+    if (customer) {
+      customer.status = req.body.status;
+
+      const updatedUser = await customer.save();
+      res.send({ message: "User Updated", user: updatedUser });
+    } else {
+      res.status(404).send({ message: "User Not Found" });
+    }
+  })
+);
 pedidosRouter.post(
   "/",
 
