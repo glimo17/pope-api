@@ -22,6 +22,7 @@ pedidosRouter.get(
 pedidosRouter.get(
   "/filter/:id",
   expressAsyncHandler(async (req, res) => {
+    console.log("si entro");
     const users = await Pedidos.find({})
       .where("status")
       .equals(req.params.id)
@@ -114,8 +115,7 @@ pedidosRouter.post(
         (customer.talla = req.body.talla || ""),
         (customer.lugar = req.body.lugar || ""),
         (customer.montoCostoDes =
-          req.body.montoCostoDes || customer.montoCostoDes)
-          ,
+          req.body.montoCostoDes || customer.montoCostoDes),
         (customer.ammount = req.body.ammount),
         (customer.product = req.body.product || ""),
         (customer.cant = req.body.cant),
