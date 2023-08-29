@@ -121,7 +121,7 @@ pedidosRouter.post(
   "/update",
 
   expressAsyncHandler(async (req, res) => {
-    console.log("jjjj");
+    console.log(req.body.dateEntrega);
 
     const customer = await Pedidos.findById(req.body.id);
     if (customer) {
@@ -147,7 +147,6 @@ pedidosRouter.post(
         (customer.ammount = req.body.ammount),
         (customer.product = req.body.product || ""),
         (customer.cant = req.body.cant),
-        (customer.date = Date.now()),
         (customer.dateEntrega = req.body.dateEntrega),
         (customer.dateCompra = req.body.dateCompra);
 
@@ -210,8 +209,8 @@ pedidosRouter.post(
         status: "Ingresado",
         cant: req.body.cant,
         date: Date.now(),
-        dateEntrega: req.body.dateEntrega,
-        dateCompra: req.body.dateCompra,
+        dateEntrega: null,
+        dateCompra: null,
       });
       console.log("va");
       const customer = await newCustomer.save();
