@@ -13,7 +13,8 @@ chargesRouter.get(
   cors(),
   expressAsyncHandler(async (req, res) => {
     const users = await Charges.find({})
-
+      .where("status")
+      .equals("Ingresado")
       .populate("accountId", "-num")
       .populate([{ path: "accountId", populate: { path: "customerId" } }]);
 
