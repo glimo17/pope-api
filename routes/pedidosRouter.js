@@ -148,8 +148,8 @@ pedidosRouter.post(
         (customer.product = req.body.product || ""),
         (customer.cant = req.body.cant),
         (customer.date = Date.now()),
-        (customer.dateEntrega = Date.now()),
-        (customer.dateCompra = Date.now());
+        (customer.dateEntrega = req.body.dateEntrega),
+        (customer.dateCompra = req.body.dateCompra);
 
       const updatedUser = await customer.save();
       res.send({ message: "User Updated", user: updatedUser });
@@ -210,8 +210,8 @@ pedidosRouter.post(
         status: "Ingresado",
         cant: req.body.cant,
         date: Date.now(),
-        dateEntrega: Date.now(),
-        dateCompra: Date.now(),
+        dateEntrega: req.body.dateEntrega,
+        dateCompra: req.body.dateCompra,
       });
       console.log("va");
       const customer = await newCustomer.save();
