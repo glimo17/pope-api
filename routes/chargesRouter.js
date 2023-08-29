@@ -5,6 +5,7 @@ import Charges from "../models/chargesModel.js";
 import { generateToken, isAuth, isAdmin } from "../utils.js";
 import cors from "cors";
 import Accounts from "../models/CustomerAccountModel.js";
+import Customer from "../models/customerModel.js";
 const chargesRouter = express.Router();
 
 chargesRouter.get(
@@ -89,6 +90,35 @@ chargesRouter.post(
       const customer = await newCustomer.save();
       res.send({ message: "Credito Creado", customer });
     }
+  })
+);
+
+chargesRouter.post(
+  "/Paymment",
+
+  expressAsyncHandler(async (req, res) => {
+    const account = await Accounts.find({});
+
+    account.forEach((element) => {
+      let customer = Customer.find((x) => x.id == element.customerId);
+      console.log(customer);
+    });
+    res.send(account);
+    // if (account) {
+    //   account.ammount = Number(account.ammount) - Number(req.body.ammount);
+    //   account.limit = Number(account.limit) + Number(req.body.ammount);
+    //   const updatedUser = await account.save();
+
+    //   const newCustomer = new Charges({
+    //     accountId: req.body.accountId,
+    //     description: req.body.description,
+    //     ammount: req.body.ammount,
+    //     ammountPay: req.body.ammountPay,
+    //     status: "Procesado",
+    //   });
+    //   const customer = await newCustomer.save();
+    //   res.send({ message: "Credito Creado", customer });
+    // }
   })
 );
 export default chargesRouter;

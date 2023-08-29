@@ -16,6 +16,7 @@ const customersSchema = new mongoose.Schema(
     dayPay2: { type: Number, required: false, unique: false },
     dateFirstPay: { type: Date, required: false, unique: false },
     dayString: { type: String, required: false, unique: false },
+    montoCuota: { type: Number, required: false, unique: false },
   },
   {
     timestamps: true,

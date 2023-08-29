@@ -61,6 +61,7 @@ customerRouter.post(
       dayPay2: req.body.dayPay2,
       dateFirstPay: req.body.dateFirstPay,
       dayString: req.body.dayString,
+      montoCuota: req.body.montoCuota,
     });
     const customer = await newCustomer.save();
     res.send({ message: "Cliente Creado", customer });
@@ -84,6 +85,7 @@ customerRouter.put(
         (customer.dateConfig = req.body.dateConfig || customer.dateConfig),
         (customer.dayPay = req.body.dayPay || customer.dayPay),
         (customer.dayPay2 = req.body.dayPay2 || customer.dayPay2),
+        (customer.montoCuota = req.body.montoCuota || customer.montoCuota),
         (customer.dateFirstPay =
           req.body.dateFirstPay || customer.dateFirstPay),
         (customer.dayString = req.body.dayString || customer.dayString);
