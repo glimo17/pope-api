@@ -34,6 +34,20 @@ pedidosRouter.get(
   })
 );
 pedidosRouter.get(
+  "/lugar/:id/:lugar",
+  expressAsyncHandler(async (req, res) => {
+    const users = await Pedidos.find({})
+      .where("status")
+      .equals(req.params.id)
+      .where("lugar")
+      .equals(req.params.lugar)
+      .populate("accountId", "-num")
+      .populate([{ path: "accountId", populate: { path: "customerId" } }]);
+
+    res.send(users);
+  })
+);
+pedidosRouter.get(
   "/:id",
   expressAsyncHandler(async (req, res) => {
     if (req.params.id) {

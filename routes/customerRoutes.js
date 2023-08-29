@@ -55,6 +55,11 @@ customerRouter.post(
       fechaNacimiento: req.body.fechaNacimiento,
       oficio: req.body.oficio,
       tipo: req.body.tipo,
+      frec: req.body.frec,
+      dateConfig: req.body.dateConfig,
+      dayPay: req.body.dayPay,
+      dateFirstPay: req.body.dateFirstPay,
+      dayString: req.body.dayString,
     });
     const customer = await newCustomer.save();
     res.send({ message: "Cliente Creado", customer });
@@ -70,6 +75,15 @@ customerRouter.put(
       customer.phone = req.body.phone || customer.phone;
       customer.canton = req.body.canton || customer.canton;
       customer.direc = req.body.direc || customer.direc;
+      (customer.fechaNacimiento = req.body.fechaNacimiento),
+        (customer.oficio = req.body.oficio || customer.oficio),
+        (customer.tipo = req.body.tipo || customer.tipo),
+        (customer.frec = req.body.frec || customer.frec),
+        (customer.dateConfig = req.body.dateConfig || customer.dateConfig),
+        (customer.dayPay = req.body.dayPay || customer.dayPay),
+        (customer.dateFirstPay =
+          req.body.dateFirstPay || customer.dateFirstPay),
+        (customer.dayString = req.body.dayString || customer.dayString);
       const updatedUser = await customer.save();
       res.send({ message: "User Updated", user: updatedUser });
     } else {
