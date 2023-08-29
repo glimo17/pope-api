@@ -58,6 +58,7 @@ customerRouter.post(
       frec: req.body.frec,
       dateConfig: req.body.dateConfig,
       dayPay: req.body.dayPay,
+      dayPay2: req.body.dayPay2,
       dateFirstPay: req.body.dateFirstPay,
       dayString: req.body.dayString,
     });
@@ -68,6 +69,7 @@ customerRouter.post(
 customerRouter.put(
   "/:id",
   expressAsyncHandler(async (req, res) => {
+    console.log(req.body);
     const customer = await Customer.findById(req.params.id);
     if (customer) {
       customer.name = req.body.name || customer.name;
@@ -81,6 +83,7 @@ customerRouter.put(
         (customer.frec = req.body.frec || customer.frec),
         (customer.dateConfig = req.body.dateConfig || customer.dateConfig),
         (customer.dayPay = req.body.dayPay || customer.dayPay),
+        (customer.dayPay2 = req.body.dayPay2 || customer.dayPay2),
         (customer.dateFirstPay =
           req.body.dateFirstPay || customer.dateFirstPay),
         (customer.dayString = req.body.dayString || customer.dayString);

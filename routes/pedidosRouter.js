@@ -90,12 +90,26 @@ pedidosRouter.post(
 pedidosRouter.post(
   "/status",
   expressAsyncHandler(async (req, res) => {
-    console.log(req.body.id);
+    console.log("req.body.id)");
     const order = await Pedidos.findById(req.body.id);
     if (order) {
       order.status = req.body.status;
 
       await order.save();
+
+      if (req.body.status == "Por Entregar") {
+        const account = await Accounts.find({})
+          .where("accountId")
+          .equals(order.accountId);
+        console.log(account[0]);
+        if (account[0]) {
+          account[0].ammount =
+            Number(account[0].ammount) + Number(order.montoVenta);
+          account[0].limit =
+            Number(account[0].limit) - Number(order.montoVenta);
+          const updatedUser = await account[0].save();
+        }
+      }
       res.send({ message: "Procesado" });
     } else {
       res.status(404).send({ message: "Order Not Found" });
@@ -170,10 +184,6 @@ pedidosRouter.post(
     console.log(req.body.lugar);
     console.log(req.body.montoVenta);
     if (account[0]) {
-      // account.ammount = Number(account.ammount) + Number(req.body.ammount);
-      // account.limit = Number(account.limit) - Number(req.body.ammount);
-      // const updatedUser = await account.save();
-
       const newCustomer = new Pedidos({
         accountId: account[0]._id,
         ammount: req.body.ammount,

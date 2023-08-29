@@ -13,6 +13,7 @@ const customersSchema = new mongoose.Schema(
     frec: { type: String, required: false, unique: false },
     dateConfig: { type: Date, required: false, unique: false },
     dayPay: { type: Number, required: false, unique: false },
+    dayPay2: { type: Number, required: false, unique: false },
     dateFirstPay: { type: Date, required: false, unique: false },
     dayString: { type: String, required: false, unique: false },
   },
