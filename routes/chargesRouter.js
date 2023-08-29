@@ -97,13 +97,27 @@ chargesRouter.post(
   "/Paymment",
 
   expressAsyncHandler(async (req, res) => {
-    const account = await Accounts.find({});
+    Accounts.find({ ammount: { $gte: 0 } }, null, function (err, account) {
+      if (err) {
+        console.log(err);
+      } else {
+        account.forEach((element) => {
+          console.log(element.customerId.frec);
+          if (element.customerId.frec == "Semanal") {
+            const newCustomer = new Charges({
+              accountId: element._id,
+              description: "Pago Semanal",
+              ammount: element.customerId.montoCuota,
+              ammountPay: 0,
+              status: "Ingresado",
+            });
+            newCustomer.save();
+          }
+        });
+        res.send(account);
+      }
+    }).populate("customerId", "-num");
 
-    account.forEach((element) => {
-      let customer = Customer.find((x) => x.id == element.customerId);
-      console.log(customer);
-    });
-    res.send(account);
     // if (account) {
     //   account.ammount = Number(account.ammount) - Number(req.body.ammount);
     //   account.limit = Number(account.limit) + Number(req.body.ammount);
@@ -119,6 +133,33 @@ chargesRouter.post(
     //   const customer = await newCustomer.save();
     //   res.send({ message: "Credito Creado", customer });
     // }
+  })
+);
+
+chargesRouter.post(
+  "/Paymment/Semanal",
+
+  expressAsyncHandler(async (req, res) => {
+    Accounts.find({ ammount: { $gte: 0 } }, null, function (err, account) {
+      if (err) {
+        console.log(err);
+      } else {
+        account.forEach((element) => {
+          console.log(element.customerId.frec);
+          if (element.customerId.frec == "Semanal") {
+            const newCustomer = new Charges({
+              accountId: element._id,
+              description: "Pago Semanal",
+              ammount: element.customerId.montoCuota,
+              ammountPay: 0,
+              status: "Ingresado",
+            });
+            newCustomer.save();
+          }
+        });
+        res.send(account);
+      }
+    }).populate("customerId", "-num");
   })
 );
 export default chargesRouter;
