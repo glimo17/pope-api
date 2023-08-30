@@ -55,20 +55,18 @@ chargesRouter.post(
 chargesRouter.post(
   "/makeCharge",
   expressAsyncHandler(async (req, res) => {
-    console.log(req.body._id);
     const order = await Charges.findById(req.body._id);
     if (order) {
       order.status = "Procesado";
 
       await order.save();
-
+      console.log(order.accountId);
       const account = await Accounts.findById(order.accountId);
-
-      if (account[0]) {
-        account[0].ammount =
-          Number(account[0].ammount) - Number(order.montoVenta);
-        account[0].limit = Number(account[0].limit) + Number(order.montoVenta);
-        const updatedUser = await account[0].save();
+      console.log(account);
+      if (account) {
+        account.ammount = Number(account.ammount) - Number(order.ammountPay);
+        account.limit = Number(account.limit) + Number(order.ammountPay);
+        const updatedUser = await account.save();
       }
       res.send({ message: "Procesado" });
     } else {
