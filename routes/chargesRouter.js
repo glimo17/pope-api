@@ -61,6 +61,15 @@ chargesRouter.post(
       order.status = "Procesado";
 
       await order.save();
+
+      const account = await Accounts.findById(order.accountId);
+
+      if (account[0]) {
+        account[0].ammount =
+          Number(account[0].ammount) - Number(order.montoVenta);
+        account[0].limit = Number(account[0].limit) + Number(order.montoVenta);
+        const updatedUser = await account[0].save();
+      }
       res.send({ message: "Procesado" });
     } else {
       res.status(404).send({ message: "Order Not Found" });
