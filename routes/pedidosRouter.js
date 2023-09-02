@@ -2,6 +2,7 @@ import express from "express";
 import bcrypt from "bcryptjs";
 import expressAsyncHandler from "express-async-handler";
 import Pedidos from "../models/pedidosModel.js";
+import Charges from "../models/chargesModel.js";
 import { generateToken, isAuth, isAdmin } from "../utils.js";
 import cors from "cors";
 import Accounts from "../models/CustomerAccountModel.js";
@@ -22,7 +23,6 @@ pedidosRouter.get(
 pedidosRouter.get(
   "/filter/:id",
   expressAsyncHandler(async (req, res) => {
-    console.log("si entro");
     const users = await Pedidos.find({})
       .where("status")
       .equals(req.params.id)
@@ -75,7 +75,6 @@ pedidosRouter.get(
 pedidosRouter.post(
   "/update2",
   expressAsyncHandler(async (req, res) => {
-    console.log(req.body.accountId);
     const order = await Pedidos.findById(req.body.accountId);
     if (order) {
       order.ammountPay = req.body.ammountPay;
@@ -90,13 +89,20 @@ pedidosRouter.post(
 pedidosRouter.post(
   "/status",
   expressAsyncHandler(async (req, res) => {
-    console.log("req.body.id)");
     const order = await Pedidos.findById(req.body.id);
+    console.log(order);
     if (order) {
       order.status = req.body.status;
-
+      const newCustomer = new Charges({
+        accountId: order.accountId,
+        description: "Pago de prima",
+        ammount: order.montoPrima,
+        ammountPay: 0,
+        status: "Ingresado",
+      });
+      newCustomer.save();
       await order.save();
-      conao;
+
       if (req.body.status == "Por Entregar") {
         const account = await Accounts.find({})
           .where("accountId")
@@ -127,6 +133,7 @@ pedidosRouter.post(
         (customer.montoCosto = req.body.montoCosto),
         (customer.montoPrima = req.body.montoPrima),
         (customer.montoDolar = req.body.montoDolar),
+        (customer.montoTipoDolar = req.body.montoCambioDolar),
         (customer.tipoPago = req.body.tipoPago),
         (customer.montoVenta = req.body.montoVenta),
         (customer.detalle = req.body.detalle),
@@ -188,6 +195,8 @@ pedidosRouter.post(
         montoPrima: req.body.montoPrima,
         link: req.body.link,
         montoDolar: req.body.montoDolar,
+        montoTipoDolar: req.body.montoCambioDolar,
+
         tipoPago: req.body.tipoPago,
         montoVenta: req.body.montoVenta,
         detalle: req.body.detalle,
@@ -206,8 +215,8 @@ pedidosRouter.post(
         status: "Ingresado",
         cant: req.body.cant,
         date: Date.now(),
-        dateEntrega: null,
-        dateCompra: null,
+        dateEntrega: req.body.dateVenta,
+        dateCompra: req.body.dateCompra,
       });
 
       const customer = await newCustomer.save();

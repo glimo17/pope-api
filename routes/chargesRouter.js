@@ -173,4 +173,64 @@ chargesRouter.post(
     }).populate("customerId", "-num");
   })
 );
+
+chargesRouter.post(
+  "/Paymment/Quincenal",
+
+  expressAsyncHandler(async (req, res) => {
+    console.log("ebtro");
+    Accounts.find({ ammount: { $gte: 0 } }, null, function (err, account) {
+      if (err) {
+        console.log(err);
+      } else {
+        account.forEach((element) => {
+          console.log(element);
+          if (element.customerId.frec == "Quincenal") {
+            console.log(element._id);
+            const newCustomer = new Charges({
+              accountId: element._id,
+              description: "Pago Quincenal",
+              ammount: element.customerId.montoCuota,
+              ammountPay: 0,
+              status: "Ingresado",
+            });
+            newCustomer.save();
+            console.log(element.customerId.frec);
+          }
+        });
+        res.send(account);
+      }
+    }).populate("customerId", "-num");
+  })
+);
+
+chargesRouter.post(
+  "/Paymment/mensual",
+
+  expressAsyncHandler(async (req, res) => {
+    console.log("ebtro");
+    Accounts.find({ ammount: { $gte: 0 } }, null, function (err, account) {
+      if (err) {
+        console.log(err);
+      } else {
+        account.forEach((element) => {
+          console.log(element);
+          if (element.customerId.frec == "Mensual") {
+            console.log(element._id);
+            const newCustomer = new Charges({
+              accountId: element._id,
+              description: "Pago Quincenal",
+              ammount: element.customerId.montoCuota,
+              ammountPay: 0,
+              status: "Ingresado",
+            });
+            newCustomer.save();
+            console.log(element.customerId.frec);
+          }
+        });
+        res.send(account);
+      }
+    }).populate("customerId", "-num");
+  })
+);
 export default chargesRouter;

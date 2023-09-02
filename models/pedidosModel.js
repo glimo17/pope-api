@@ -47,6 +47,9 @@ const PedidostSchema = new mongoose.Schema(
     montoDolar: {
       type: Number,
     },
+    montoTipoDolar: {
+      type: Number,
+    },
     descuento: {
       type: Number,
     },
