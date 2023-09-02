@@ -2,6 +2,7 @@ import express from "express";
 import bcrypt from "bcryptjs";
 import expressAsyncHandler from "express-async-handler";
 import Customer from "../models/customerModel.js";
+import Accounts from "../models/CustomerAccountModel.js";
 import { generateToken, isAuth, isAdmin } from "../utils.js";
 import cors from "cors";
 const customerRouter = express.Router();
@@ -10,7 +11,7 @@ customerRouter.get(
   "/",
   cors(),
   expressAsyncHandler(async (req, res) => {
-    const users = await Customer.find({});
+    const users = await Accounts.find({}).populate("customerId", "-num");
     res.send(users);
   })
 );

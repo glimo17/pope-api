@@ -60,9 +60,9 @@ chargesRouter.post(
       order.status = "Procesado";
 
       await order.save();
-      console.log(order.accountId);
+
       const account = await Accounts.findById(order.accountId);
-      console.log(account);
+
       if (account) {
         account.ammount = Number(account.ammount) - Number(order.ammountPay);
         account.limit = Number(account.limit) + Number(order.ammountPay);
@@ -148,13 +148,15 @@ chargesRouter.post(
   "/Paymment/Semanal",
 
   expressAsyncHandler(async (req, res) => {
+    console.log("ebtro");
     Accounts.find({ ammount: { $gte: 0 } }, null, function (err, account) {
       if (err) {
         console.log(err);
       } else {
         account.forEach((element) => {
-          console.log(element.customerId.frec);
+          console.log(element);
           if (element.customerId.frec == "Semanal") {
+            console.log(element._id);
             const newCustomer = new Charges({
               accountId: element._id,
               description: "Pago Semanal",
@@ -163,6 +165,7 @@ chargesRouter.post(
               status: "Ingresado",
             });
             newCustomer.save();
+            console.log(element.customerId.frec);
           }
         });
         res.send(account);

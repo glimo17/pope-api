@@ -12,7 +12,7 @@ accountsRouter.get(
   cors(),
   expressAsyncHandler(async (req, res) => {
     const users = await Accounts.find({}).populate("customerId", "name");
-    console.log(users);
+
     res.send(users);
   })
 );

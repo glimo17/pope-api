@@ -96,12 +96,12 @@ pedidosRouter.post(
       order.status = req.body.status;
 
       await order.save();
-
+      conao;
       if (req.body.status == "Por Entregar") {
         const account = await Accounts.find({})
           .where("accountId")
           .equals(order.accountId);
-        console.log(account[0]);
+
         if (account[0]) {
           account[0].ammount =
             Number(account[0].ammount) + Number(order.montoVenta);
@@ -121,8 +121,6 @@ pedidosRouter.post(
   "/update",
 
   expressAsyncHandler(async (req, res) => {
-    console.log(req.body.dateEntrega);
-
     const customer = await Pedidos.findById(req.body.id);
     if (customer) {
       (customer.ammount = req.body.ammount),
@@ -180,8 +178,7 @@ pedidosRouter.post(
     const account = await Accounts.find({})
       .where("customerId")
       .equals(req.body.customerId);
-    console.log(req.body.lugar);
-    console.log(req.body.montoVenta);
+
     if (account[0]) {
       const newCustomer = new Pedidos({
         accountId: account[0]._id,
@@ -212,9 +209,9 @@ pedidosRouter.post(
         dateEntrega: null,
         dateCompra: null,
       });
-      console.log("va");
+
       const customer = await newCustomer.save();
-      console.log("ya");
+
       res.send({ message: "Credito Creado", customer });
     }
   })
