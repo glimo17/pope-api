@@ -11,7 +11,7 @@ customerRouter.get(
   "/",
   cors(),
   expressAsyncHandler(async (req, res) => {
-    const users = await Accounts.find({}).populate("customerId", "-num");
+    const users = await Customer.find({});
     res.send(users);
   })
 );
