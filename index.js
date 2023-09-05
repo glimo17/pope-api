@@ -86,7 +86,7 @@ app.use((err, req, res, next) => {
 });
 
 app.use(cors(allowCors(handler)));
-
+// nuevo
 const port = process.env.PORT || 5000;
 
 app.listen(5000, () => {
