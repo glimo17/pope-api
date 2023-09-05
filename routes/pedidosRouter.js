@@ -92,18 +92,17 @@ pedidosRouter.post(
     const order = await Pedidos.findById(req.body.id);
     console.log(order);
     if (order) {
-      order.status = req.body.status;
-      const newCustomer = new Charges({
-        accountId: order.accountId,
-        description: "Pago de prima",
-        ammount: order.montoPrima,
-        ammountPay: 0,
-        status: "Ingresado",
-      });
-      newCustomer.save();
-      await order.save();
-
       if (req.body.status == "Por Entregar") {
+        order.status = req.body.status;
+        const newCustomer = new Charges({
+          accountId: order.accountId,
+          description: "Pago de prima",
+          ammount: order.montoPrima,
+          ammountPay: 0,
+          status: "Ingresado",
+        });
+        newCustomer.save();
+        await order.save();
         const account = await Accounts.find({})
           .where("accountId")
           .equals(order.accountId);
